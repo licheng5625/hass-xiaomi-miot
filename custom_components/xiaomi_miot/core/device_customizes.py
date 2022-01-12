@@ -237,6 +237,27 @@ DEVICE_CUSTOMIZES = {
         'device_class': 'energy',
         'unit_of_measurement': 'kWh',
     },
+    'lumi.airer.acn01': {
+        'extend_miot_specs': [
+            {
+                'iid': 2,
+                'properties': [
+                    {
+                        'iid': 101,
+                        'type': 'urn:miot-spec-v2:property:dry_mode',
+                        'format': 'uint8',
+                        'access': ['read', 'write'],
+                        'value-list': [
+                            {'value': 0, 'description': 'off'},
+                            {'value': 1, 'description': 'dry'},
+                            {'value': 2, 'description': 'winddry'},
+                        ],
+                    },
+                ],
+            },
+        ],
+        'select_properties': 'dry_mode',
+    },
     'lumi.ctrl_neutral1.*': {
         'cloud_delay_update': 10,
     },
@@ -251,6 +272,10 @@ DEVICE_CUSTOMIZES = {
     'lumi.motion.*': {
         'interval_seconds': 15,
         'motion_timeout': 60,
+    },
+    'lumi.sensor_gas.mcn02': {
+        'chunk_properties': 1,
+        'exclude_miot_services': 'gas_sensor_control',
     },
     'lumi.sensor_motion.*': {
         'interval_seconds': 15,
@@ -267,8 +292,13 @@ DEVICE_CUSTOMIZES = {
         'cloud_delay_update': 10,
     },
     'mmgg.feeder.petfeeder': {
-        'sensor_attributes': 'feed_today',
-        'miio_commands': {
+        'sensor_attributes': 'clean_days,dryer_days,event.feedStats:fed_today,event.feedStats:fed_week,event.feedStats:fed_month',
+        'sensor_attributes': 'clean_days,dryer_days,event.feedStats:fed_today,event.feedStats:fed_week,'
+                             'event.feedStats:fed_month',
+        'binary_sensor_attributes': 'feed_plan,wifi_led,key_lock,outlet_status,door_result',
+        'miio_cloud_records': 'event.feedStats:500',
+        'miio_event_feedStats_template': 'mmgg_feeder_petfeeder_feedstats',
+ 	    'miio_commands': {
             'getprops': [
                 'food_status', 'feed_plan', 'door_result', 'feed_today', 'clean_days', 'outlet_status',
                 'dryer_days', 'weight_level', 'wifi_led', 'key_lock', 'country_code',
@@ -338,6 +368,10 @@ DEVICE_CUSTOMIZES = {
     'rockrobo.vacuum.*:props:clean_time': {
         'value_ratio': 0.016666,
         'unit_of_measurement': 'min',
+    },
+    'roome.bhf_light.*': {
+        'sensor_attributes': 'temp,currenttemp',
+        'select_attributes': 'main_state,main_light,night_light,heat,vent,dry,natural_wind,delay_wind',
     },
     'suittc.airrtc.wk168': {
         'switch_properties': 'on',
