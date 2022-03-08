@@ -343,8 +343,13 @@ DEVICE_CUSTOMIZES = {
         'cloud_delay_update': 10,
     },
     'mmgg.feeder.petfeeder': {
-        'sensor_attributes': 'feed_today',
-        'miio_commands': {
+        'sensor_attributes': 'clean_days,dryer_days,event.feedStats:fed_today,event.feedStats:fed_week,event.feedStats:fed_month',
+        'sensor_attributes': 'clean_days,dryer_days,event.feedStats:fed_today,event.feedStats:fed_week,'
+                             'event.feedStats:fed_month',
+        'binary_sensor_attributes': 'feed_plan,wifi_led,key_lock,outlet_status,door_result',
+        'miio_cloud_records': 'event.feedStats:500',
+        'miio_event_feedStats_template': 'mmgg_feeder_petfeeder_feedstats',
+         'miio_commands': {
             'getprops': [
                 'food_status', 'feed_plan', 'door_result', 'feed_today', 'clean_days', 'outlet_status',
                 'dryer_days', 'weight_level', 'wifi_led', 'key_lock', 'country_code',
